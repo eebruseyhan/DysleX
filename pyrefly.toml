@@ -1,0 +1,4 @@
+# Pyrefly configuration for DysleX root workspace
+search-path = ["backend"]
+site-package-path = ["backend/venv/lib/python3.13/site-packages"]
+python-interpreter-path = "backend/venv/bin/python3"
