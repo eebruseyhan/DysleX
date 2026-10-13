@@ -1,23 +1,60 @@
-# Operating System
+# ============ Operating System ============
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Python / Backend
+# ============ Editors / IDE ============
+# Kişisel editör ayarları (eklenti önerileri hariç)
+.vscode/*
+!.vscode/extensions.json
+**/.vscode/*
+!**/.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# ============ Secrets / Environment ============
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# ============ Python / Backend ============
 backend/venv/
-backend/__pycache__/
-backend/**/__pycache__/
+backend/.venv/
+venv/
+.venv/
+__pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
-backend/.env
-backend/.pytest_cache/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+.coverage
+htmlcov/
 
-# Node / Frontend
+# Kullanıcıların yüklediği dosyalar (kişisel veri)
+backend/uploads/
+
+# ============ Node / Frontend ============
+node_modules/
 frontend/node_modules/
 frontend/dist/
+frontend/dist-ssr/
 frontend/.eslintcache
 frontend/*.tsbuildinfo
-frontend/.env.local
-frontend/.env.*.local
+*.local
 
-# General
-.env
+# ============ Logs ============
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
