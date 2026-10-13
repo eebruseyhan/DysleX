@@ -1,0 +1,23 @@
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Python / Backend
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+*.py[cod]
+*$py.class
+backend/.env
+backend/.pytest_cache/
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.eslintcache
+frontend/*.tsbuildinfo
+frontend/.env.local
+frontend/.env.*.local
+
+# General
+.env
