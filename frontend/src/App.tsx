@@ -1,21 +1,16 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-interface StatusInfo {
+interface BackendStatus {
   status: 'connected' | 'connecting' | 'disconnected'
   message?: string
   data?: unknown
 }
 
 function App() {
-  const [backendState, setBackendState] = useState<StatusInfo>({
+  const [backendState, setBackendState] = useState<BackendStatus>({
     status: 'connecting',
     message: 'Backend kontrol ediliyor...',
-  })
-
-  const [dbState, setDbState] = useState<StatusInfo>({
-    status: 'connecting',
-    message: 'Veritabanı kontrol ediliyor...',
   })
 
   const checkBackend = async () => {
@@ -26,7 +21,7 @@ function App() {
         const data = await response.json()
         setBackendState({
           status: 'connected',
-          message: 'FastAPI Backend çalışıyor!',
+          message: 'FastAPI Backend başarıyla bağlandı!',
           data,
         })
       } else {
@@ -43,60 +38,21 @@ function App() {
     }
   }
 
-  const checkDatabase = async () => {
-    setDbState({ status: 'connecting', message: 'Veritabanı bağlantısı test ediliyor...' })
-    try {
-      const response = await fetch('/api/db-check')
-      if (response.ok) {
-        const data = await response.json()
-        if (data.connected) {
-          setDbState({
-            status: 'connected',
-            message: data.message || 'PostgreSQL bağlantısı başarılı!',
-            data,
-          })
-        } else {
-          setDbState({
-            status: 'disconnected',
-            message: data.message || 'Bağlantı sağlanamadı. backend/.env ayarlarını kontrol edin.',
-            data,
-          })
-        }
-      } else {
-        setDbState({
-          status: 'disconnected',
-          message: `Sunucu hatası: ${response.status}`,
-        })
-      }
-    } catch {
-      setDbState({
-        status: 'disconnected',
-        message: 'Backend API henüz aktif değil.',
-      })
-    }
-  }
-
   useEffect(() => {
     checkBackend()
-    checkDatabase()
   }, [])
-
-  const refreshAll = () => {
-    checkBackend()
-    checkDatabase()
-  }
 
   return (
     <main className="dyslex-container">
       <header className="header">
         <div className="badge-group">
           <span className="badge">Python FastAPI</span>
-          <span className="badge">PostgreSQL</span>
           <span className="badge">React 19 + TypeScript</span>
+          <span className="badge">Vite</span>
         </div>
         <h1 className="title">DysleX</h1>
         <p className="subtitle">
-          Backend, Frontend ve Veritabanı (PostgreSQL) entegrasyonu hazırlandı.
+          Backend ve Frontend kurulumu başarıyla tamamlandı. Geliştirmeye hemen başlayabilirsiniz!
         </p>
       </header>
 
@@ -105,7 +61,7 @@ function App() {
         <div className="card">
           <h2 className="card-title">🐍 Backend (FastAPI)</h2>
           <p className="card-desc">
-            Python sanal ortamı ve FastAPI REST API aktif. Otomatik OpenAPI/Swagger dokümantasyonu hazır.
+            Python sanal ortamı (venv) ve FastAPI REST API hazır. Otomatik Swagger dokümantasyonu aktif.
           </p>
           <div
             className={`status-badge ${
@@ -118,7 +74,7 @@ function App() {
           >
             <span className="status-dot"></span>
             {backendState.status === 'connected'
-              ? 'Backend Aktif'
+              ? 'Bağlantı Başarılı'
               : backendState.status === 'connecting'
               ? 'Kontrol Ediliyor...'
               : 'Bağlantı Yok'}
@@ -138,45 +94,8 @@ function App() {
               rel="noreferrer"
               className="btn-outline"
             >
-              Docs (/docs)
+              API Docs (/docs)
             </a>
-          </div>
-        </div>
-
-        {/* Database Card */}
-        <div className="card">
-          <h2 className="card-title">🐘 Veritabanı (PostgreSQL)</h2>
-          <p className="card-desc">
-            SQLAlchemy ORM ve DBeaver bağlantısı. <code className="code-snippet">backend/.env</code> dosyasından yapılandırılır.
-          </p>
-          <div
-            className={`status-badge ${
-              dbState.status === 'connected'
-                ? 'status-connected'
-                : dbState.status === 'connecting'
-                ? 'status-connecting'
-                : 'status-disconnected'
-            }`}
-          >
-            <span className="status-dot"></span>
-            {dbState.status === 'connected'
-              ? 'Veritabanı Bağlı'
-              : dbState.status === 'connecting'
-              ? 'Bağlanıyor...'
-              : 'Bağlantı Bekleniyor'}
-          </div>
-          {dbState.data ? (
-            <pre className="response-box">{JSON.stringify(dbState.data, null, 2)}</pre>
-          ) : (
-            <p className="card-desc">{dbState.message}</p>
-          )}
-          <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
-            <button className="btn-primary" onClick={checkDatabase}>
-              DB Test Et
-            </button>
-            <button className="btn-outline" onClick={refreshAll}>
-              Tümünü Yenile
-            </button>
           </div>
         </div>
 
@@ -184,38 +103,38 @@ function App() {
         <div className="card">
           <h2 className="card-title">⚛️ Frontend (React + TS)</h2>
           <p className="card-desc">
-            Vite geliştirme sunucusu ve ters proxy aktif. API istekleri doğrudan FastAPI sunucusuna iletilir.
+            Vite ile ultra hızlı HMR, TypeScript tip güvenliği ve yapılandırılmış ters proxy (<code className="code-snippet">/api</code> ➔ <code className="code-snippet">:8000</code>).
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto' }}>
             <div className="card-desc">
               Düzenlemek için: <code className="code-snippet">frontend/src/App.tsx</code>
             </div>
             <a
-              href="http://localhost:5173"
+              href="https://vite.dev"
               target="_blank"
               rel="noreferrer"
               className="btn-outline"
               style={{ textAlign: 'center' }}
             >
-              Arayüzü Aç (:5173)
+              Vite Dokümantasyonu
             </a>
           </div>
         </div>
       </section>
 
-      {/* Quick Setup Guide */}
+      {/* Quick Start Guide */}
       <section className="card">
-        <h2 className="card-title">⚙️ DBeaver / PostgreSQL Bağlantı Ayarları</h2>
-        <p className="card-desc">
-          DBeaver'da oluşturduğunuz veritabanı adı, kullanıcı ve şifrenizi <code className="code-snippet">backend/.env</code> dosyasına girebilirsiniz:
-        </p>
-        <pre className="response-box">
-{`DB_USER=postgres
-DB_PASSWORD=dbeaver_sifreniz
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=dbeaver_veritabani_adiniz`}
-        </pre>
+        <h2 className="card-title">🚀 Hızlı Başlatma Komutları</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div>
+            <strong>Backend Başlatma:</strong>
+            <pre className="response-box">cd backend &amp;&amp; source venv/bin/activate &amp;&amp; uvicorn app.main:app --reload --port 8000</pre>
+          </div>
+          <div>
+            <strong>Frontend Başlatma:</strong>
+            <pre className="response-box">cd frontend &amp;&amp; npm run dev</pre>
+          </div>
+        </div>
       </section>
     </main>
   )
