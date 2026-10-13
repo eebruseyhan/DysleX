@@ -10,7 +10,7 @@ env_path = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(dotenv_path=env_path)
 
 DB_USER = os.getenv("DB_USER", "postgres")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "postgres")
+DB_PASSWORD = os.getenv("DB_PASSWORD")  # Sabit varsayılan yok: .env'den gelmek zorunda
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", "5432")
 DB_NAME = os.getenv("DB_NAME", "dyslex_db")
@@ -19,6 +19,10 @@ custom_database_url = os.getenv("DATABASE_URL")
 if custom_database_url:
     DATABASE_URL = custom_database_url
 else:
+    if not DB_PASSWORD:
+        raise RuntimeError(
+            "DB_PASSWORD (veya DATABASE_URL) tanımlı değil. backend/.env dosyasını kontrol edin."
+        )
     DATABASE_URL = URL.create(
         drivername="postgresql+psycopg",
         username=DB_USER,

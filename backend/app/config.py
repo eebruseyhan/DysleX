@@ -8,8 +8,8 @@ load_dotenv(dotenv_path=BASE_DIR / ".env")
 
 
 class Settings:
-    # JWT
-    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "dev-insecure-secret-change-me")
+    # JWT (sabit varsayılan yok: .env'den gelmek zorunda)
+    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY", "")
     JWT_ALGORITHM: str = os.getenv("JWT_ALGORITHM", "HS256")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440"))
 
@@ -29,4 +29,9 @@ class Settings:
 
 
 settings = Settings()
+if not settings.JWT_SECRET_KEY:
+    raise RuntimeError(
+        "JWT_SECRET_KEY tanımlı değil. backend/.env dosyasına ekleyin: "
+        "python -c \"import secrets; print(secrets.token_hex(32))\""
+    )
 settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
