@@ -1,0 +1,86 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: hsl(252 18% 8% / 0.7);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar-inner {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--accent-gradient);
+  color: hsl(20 40% 10%);
+  font-weight: 700;
+  box-shadow: var(--shadow-glow);
+  transition: transform 0.4s var(--ease);
+}
+
+.logo:hover .logo-mark {
+  transform: rotate(-8deg) scale(1.05);
+}
+
+.nav-link {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text);
+  background: hsl(40 30% 90% / 0.06);
+}
+
+.nav-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), hsl(200 60% 50%));
+  color: hsl(200 50% 10%);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .nav-username {
+    display: none;
+  }
+  .nav-user {
+    padding-right: 0.25rem;
+  }
+}
