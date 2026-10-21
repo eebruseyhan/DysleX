@@ -1,0 +1,320 @@
+.library {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.library-head h1 {
+  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+  margin-bottom: 0.4rem;
+}
+
+/* ---------- Dropzone ---------- */
+.dropzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  min-height: 150px;
+  padding: 1.8rem;
+  border-radius: var(--radius-lg);
+  border: 2px dashed hsl(36 95% 62% / 0.35);
+  background:
+    radial-gradient(500px 140px at 50% 0%, hsl(36 95% 62% / 0.08), transparent),
+    hsl(252 14% 12% / 0.5);
+  cursor: pointer;
+  transition:
+    border-color 0.25s,
+    background 0.25s,
+    transform 0.25s var(--ease);
+}
+
+.dropzone:hover,
+.dropzone.dragging {
+  border-color: var(--amber);
+  background:
+    radial-gradient(500px 160px at 50% 0%, hsl(36 95% 62% / 0.16), transparent),
+    hsl(252 14% 13% / 0.7);
+}
+
+.dropzone.dragging {
+  transform: scale(1.01);
+}
+
+.dropzone.uploading {
+  cursor: default;
+  border-style: solid;
+}
+
+.dropzone-icon {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: var(--accent-gradient);
+  color: hsl(20 40% 10%);
+  box-shadow: var(--shadow-glow);
+  transition: transform 0.3s var(--ease);
+}
+
+.dropzone:hover .dropzone-icon {
+  transform: translateY(-4px);
+}
+
+.dropzone-title {
+  font-size: 1.12rem;
+  font-weight: 500;
+}
+
+.dropzone-sub {
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.upload-progress {
+  width: min(520px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.upload-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: hsl(40 30% 90% / 0.08);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-gradient);
+  transition: width 0.2s ease;
+}
+
+.progress-bar.indeterminate {
+  width: 40%;
+  animation: indeterminate 1.1s ease-in-out infinite;
+}
+
+@keyframes indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+/* ---------- Toolbar ---------- */
+.library-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.library-toolbar h2 {
+  font-size: 1.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.count {
+  font-size: 0.8rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: hsl(40 30% 90% / 0.08);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: min(320px, 100%);
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: hsl(252 20% 6% / 0.6);
+  color: var(--text-faint);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search:focus-within {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 4px hsl(36 95% 62% / 0.12);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  outline: none;
+}
+
+.search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.search-clear {
+  display: grid;
+  place-items: center;
+  border: none;
+  background: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ---------- Grid ---------- */
+.doc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.2rem;
+}
+
+.doc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  animation: fade-up 0.5s var(--ease) both;
+  transition:
+    transform 0.3s var(--ease),
+    border-color 0.3s;
+}
+
+.doc-card:hover {
+  transform: translateY(-4px);
+  border-color: hsl(36 95% 62% / 0.3);
+}
+
+.doc-thumb {
+  position: relative;
+  height: 110px;
+  border-radius: 12px;
+  background: linear-gradient(160deg, #fefbea, #f3ead0);
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.doc-lines {
+  position: absolute;
+  inset: 22px 18px auto 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.doc-lines i {
+  display: block;
+  height: 6px;
+  border-radius: 4px;
+  background: hsl(40 20% 30% / 0.18);
+}
+
+.doc-lines i:nth-child(1) {
+  width: 70%;
+  background: hsl(24 80% 55% / 0.45);
+}
+.doc-lines i:nth-child(3) {
+  width: 85%;
+}
+.doc-lines i:nth-child(4) {
+  width: 55%;
+}
+
+.doc-initial {
+  position: absolute;
+  right: 12px;
+  bottom: 4px;
+  font-family: 'OpenDyslexic', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: hsl(24 70% 45% / 0.25);
+  transition: transform 0.4s var(--ease);
+}
+
+.doc-card:hover .doc-initial {
+  transform: translateY(-4px) rotate(-6deg);
+}
+
+.doc-title {
+  font-weight: 600;
+  font-size: 1.02rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.6em;
+  line-height: 1.3;
+}
+
+.doc-title:hover {
+  color: var(--amber);
+}
+
+.doc-date {
+  font-size: 0.84rem;
+}
+
+.doc-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.doc-actions .icon-btn {
+  width: 36px;
+  height: 36px;
+}
+
+.confirm-text {
+  font-size: 0.88rem;
+  flex: 1;
+}
+
+.rename-form {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.rename-form .input {
+  padding: 0.5rem 0.7rem;
+}
+
+.empty {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.empty .feature-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--amber);
+}
